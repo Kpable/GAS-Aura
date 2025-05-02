@@ -77,7 +77,11 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FName("InputTag.4"), 
 	FString("The Input Tag for 4 key"));
 
-	GameplayTags.InputTag_4 = UGameplayTagsManager::Get().AddNativeGameplayTag(
-	FName("Damage"), 
+	GameplayTags.Damage = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Damage"), 
 FString("Damage"));
+
+	GameplayTags.Effects_HitReact = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Effects.HitReact"), 
+FString("The tag for reacting to a hit."));
 }

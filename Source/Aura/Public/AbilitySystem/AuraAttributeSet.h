@@ -121,6 +121,14 @@ public:
 	void OnRep_Mana(const FGameplayAttributeData& OldMana) const;
 
 	/*
+	 * Meta Attributes
+	 */
+
+	UPROPERTY(BlueprintReadOnly, Category = "Meta Attributes")
+	FGameplayAttributeData IncomingDamage;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, IncomingDamage);
+
+	/*
 	 * Secondary Attributes
 	 */
 

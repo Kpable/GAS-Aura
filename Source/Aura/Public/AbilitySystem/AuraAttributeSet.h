@@ -206,6 +206,8 @@ public:
 private:
 
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& EffectProperties) const;
+
+	void ShowFloatingText(const FEffectProperties& Props, float Damage) const;
 	
 };
 

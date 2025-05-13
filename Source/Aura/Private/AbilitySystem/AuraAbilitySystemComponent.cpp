@@ -37,6 +37,7 @@ void UAuraAbilitySystemComponent::AbilityInputTagHeld(const FGameplayTag& InputT
 			if (!AbilitySpec.IsActive())
 			{
 				TryActivateAbility(AbilitySpec.Handle);
+				UE_LOG(LogTemp, Display, TEXT("Try Activate Ability %s"), *InputTag.ToString());
 			}
 		}
 	}

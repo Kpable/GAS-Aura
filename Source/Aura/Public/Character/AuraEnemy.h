@@ -34,8 +34,9 @@ public:
 
 	/** Combat Interface */
 	FORCEINLINE virtual int32 GetPlayerLevel() override { return Level; }
-
 	virtual void Die() override;
+	virtual void SetCombatTarget_Implementation(AActor* InCombatTarget) override;
+	virtual AActor* GetCombatTarget_Implementation() const override;
 
 	/** End Combat Interface */
 
@@ -77,4 +78,6 @@ protected:
 
 	UPROPERTY()
 	TObjectPtr<AAuraAIController> AuraAIController;
+
+	TObjectPtr<AActor> CombatTarget;
 };

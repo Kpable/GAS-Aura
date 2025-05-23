@@ -139,4 +139,20 @@ FString("The tag for reacting to a hit."));
 	GameplayTags.Abilities_Attack = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Abilities.Attack"), 
 FString("The tag for attacking."));
+
+	/*
+	 *	Montages
+	 */
+		
+	GameplayTags.Montage_Attack_Weapon = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Montage.Attack.Weapon"), 
+FString("Montage Weapon"));
+
+	GameplayTags.Montage_Attack_RightHand = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Montage.Attack.RightHand"), 
+FString("Montage Right Hand"));
+
+	GameplayTags.Montage_Attack_LeftHand = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Montage.Attack.LeftHand"), 
+FString("Montage Left Hand"));
 }

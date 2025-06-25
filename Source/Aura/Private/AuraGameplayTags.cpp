@@ -156,6 +156,10 @@ FString("Socket Right Hand"));
 		FName("CombatSocket.LeftHand"), 
 FString("Socket Left Hand"));
 
+	GameplayTags.CombatSocket_Tail = UGameplayTagsManager::Get().AddNativeGameplayTag(
+	FName("CombatSocket.Tail"), 
+FString("Socket Tail"));
+
 	/*
 	 *	Montages
 	 */

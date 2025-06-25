@@ -29,8 +29,6 @@ AAuraEnemy::AAuraEnemy()
 
 	GetCharacterMovement()->bUseControllerDesiredRotation = true;
 
-	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
-
 	HealthBar = CreateDefaultSubobject<UWidgetComponent>("HealthBar");
 	HealthBar->SetupAttachment(GetRootComponent());
 }
@@ -84,7 +82,12 @@ AActor* AAuraEnemy::GetCombatTarget_Implementation() const
 void AAuraEnemy::BeginPlay()
 {
 	Super::BeginPlay();
-	GetCharacterMovement()->MaxWalkSpeed = BaseWalkSpeed;	
+	
+	GetCharacterMovement()->MaxWalkSpeed = BaseWalkSpeed;
+	
+	AttributeSet = NewObject<UAuraAttributeSet>(this, UAuraAttributeSet::StaticClass());
+	AbilitySystemComponent->AddAttributeSetSubobject(AttributeSet.Get());
+	
 	InitAbilityActorInfo();
 
 	if (HasAuthority())

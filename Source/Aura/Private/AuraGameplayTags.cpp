@@ -140,6 +140,10 @@ FString("The tag for reacting to a hit."));
 		FName("Abilities.Attack"), 
 FString("The tag for attacking."));
 
+	GameplayTags.Abilities_Summon = UGameplayTagsManager::Get().AddNativeGameplayTag(
+	FName("Abilities.Summon"), 
+FString("The tag for summoning."));
+
 	/*
 	 *	Combat Sockets
 	 */

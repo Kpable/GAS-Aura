@@ -23,6 +23,9 @@ void UAuraAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclassOf
 			}
 		}
 	}
+	
+	bHasAbilitiesBeenGiven = true;
+	AuraAbilitiesGivenDelegate.Broadcast(this);
 }
 
 void UAuraAbilitySystemComponent::AbilityInputTagHeld(const FGameplayTag& InputTag)

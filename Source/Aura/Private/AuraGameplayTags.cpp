@@ -144,6 +144,10 @@ FString("The tag for attacking."));
 	FName("Abilities.Summon"), 
 FString("The tag for summoning."));
 
+	GameplayTags.Abilities_Fire_FireBolt = UGameplayTagsManager::Get().AddNativeGameplayTag(
+	FName("Abilities.Fire.FireBolt"), 
+FString("Fire Bolt Ability Tag."));
+
 	/*
 	 *	Combat Sockets
 	 */

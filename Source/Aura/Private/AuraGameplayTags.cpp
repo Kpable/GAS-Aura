@@ -149,6 +149,13 @@ FString("The tag for summoning."));
 FString("Fire Bolt Ability Tag."));
 
 	/*
+	 *	Cooldowns
+	 */
+	GameplayTags.Cooldown_Fire_FireBolt = UGameplayTagsManager::Get().AddNativeGameplayTag(
+	FName("Cooldown.Fire.FireBolt"), 
+FString("Fire Bolt Cooldown Tag."));
+
+	/*
 	 *	Combat Sockets
 	 */
 		

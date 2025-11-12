@@ -28,7 +28,7 @@ void UAuraAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclassOf
 	}
 	
 	bHasAbilitiesBeenGiven = true;
-	AuraAbilitiesGivenDelegate.Broadcast(this);
+	AuraAbilitiesGivenDelegate.Broadcast();
 }
 
 void UAuraAbilitySystemComponent::AddCharacterPassiveAbilities(
@@ -148,7 +148,7 @@ void UAuraAbilitySystemComponent::OnRep_ActivateAbilities()
 	if (!bHasAbilitiesBeenGiven)
 	{
 		bHasAbilitiesBeenGiven = true;
-		AuraAbilitiesGivenDelegate.Broadcast(this);
+		AuraAbilitiesGivenDelegate.Broadcast();
 	}
 }
 

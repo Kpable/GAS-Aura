@@ -244,7 +244,7 @@ private:
 
 	void HandleIncomingXP(const FEffectProperties& EffectProperties);
 	void HandleIncomingDamage(const FEffectProperties& EffectProperties);
-	void Debuff(const FEffectProperties& EffectProperties);
+	void Debuff(const FEffectProperties& Props);
 	
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& EffectProperties) const;
 

@@ -137,10 +137,10 @@ bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, class UPackageMap* M
 		{
 			if (!DamageType.IsValid())
 			{
-				DamageType = TSharedPtr<FGameplayTag>(new FGameplayTag());
+				DamageType = FGameplayTag();
 			}
 		}
-		DamageType->NetSerialize(Ar, Map, bOutSuccess);	
+		DamageType.NetSerialize(Ar, Map, bOutSuccess);	
 	}
 	
 	if (Ar.IsLoading())

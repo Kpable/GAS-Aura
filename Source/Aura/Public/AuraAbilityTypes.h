@@ -56,7 +56,7 @@ public:
 	float GetDebuffDamage() const { return DebuffDamage; }
 	float GetDebuffDuration() const { return DebuffDuration; }
 	float GetDebuffFrequency() const { return DebuffFrequency; }
-	TSharedPtr<FGameplayTag> GetDamageType() const { return DamageType; }
+	FGameplayTag GetDamageType() const { return DamageType; }
 	
 	void SetIsCriticalHit(bool bInIsCriticalHit) { bIsCriticalHit = bInIsCriticalHit; }
 	void SetIsBlockedHit(bool bInIsBlockedHit) { bIsBlockedHit = bInIsBlockedHit; }
@@ -64,7 +64,7 @@ public:
 	void SetDebuffDamage(float InDebuffDamage) { DebuffDamage = InDebuffDamage; }
 	void SetDebuffDuration(float InDebuffDuration) { DebuffDuration = InDebuffDuration; }
 	void SetDebuffFrequency(float InDebuffFrequency) { DebuffFrequency = InDebuffFrequency; }
-	void SetDamageType(TSharedPtr<FGameplayTag> InDamageType) { DamageType = InDamageType; }
+	void SetDamageType(FGameplayTag InDamageType) { DamageType = InDamageType; }
 
 	/** Returns the actual struct used for serialization, subclasses must override this! */
 	virtual UScriptStruct* GetScriptStruct() const 
@@ -107,8 +107,9 @@ protected:
 
 	UPROPERTY()
 	float DebuffFrequency = 0.f;
-
-	TSharedPtr<FGameplayTag> DamageType;
+	
+	UPROPERTY()
+	FGameplayTag DamageType = FGameplayTag();
 
 };
 

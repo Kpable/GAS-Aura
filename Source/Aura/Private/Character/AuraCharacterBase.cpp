@@ -7,6 +7,7 @@
 #include "AuraGameplayTags.h"
 #include "GameplayEffectTypes.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "AbilitySystem/Debuff/DebuffNiagaraComponent.h"
 #include "Aura/Aura.h"
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -17,6 +18,10 @@ AAuraCharacterBase::AAuraCharacterBase()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	FireDebuffNiagaraComponent = CreateDefaultSubobject<UDebuffNiagaraComponent>("FireDebuffNiagaraComponent");
+	FireDebuffNiagaraComponent->SetupAttachment(GetRootComponent());
+	FireDebuffNiagaraComponent->DebuffTag = FAuraGameplayTags::Get().Debuff_Fire;
+	
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 	GetCapsuleComponent()->SetGenerateOverlapEvents(false);
 	GetMesh()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
@@ -92,6 +97,16 @@ ECharacterClass AAuraCharacterBase::GetCharacterClass_Implementation()
 	return CharacterClass;
 }
 
+FOnASCRegistered AAuraCharacterBase::GetOnASCRegisteredDelegate()
+{
+	return OnAscRegistered;
+}
+
+FOnDeath AAuraCharacterBase::GetOnDeathDelegate()
+{
+	return OnDeath;
+}
+
 void AAuraCharacterBase::MulticastHandleDeath_Implementation()
 {
 	UGameplayStatics::PlaySoundAtLocation(this, DeathSound, GetActorLocation(), GetActorRotation());
@@ -107,6 +122,7 @@ void AAuraCharacterBase::MulticastHandleDeath_Implementation()
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	Dissolve();
 	bIsDead = true;
+	OnDeath.Broadcast(this);
 }
 
 // Called when the game starts or when spawned

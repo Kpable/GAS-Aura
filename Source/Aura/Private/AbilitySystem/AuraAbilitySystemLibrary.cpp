@@ -217,7 +217,7 @@ FGameplayTag UAuraAbilitySystemLibrary::GetDebuffDamageType(const FGameplayEffec
 	{
 		if (AuraEffectContext->GetDamageType().IsValid())
 		{
-			return *AuraEffectContext->GetDamageType();
+			return AuraEffectContext->GetDamageType();
 		}		
 	}
 
@@ -268,8 +268,8 @@ void UAuraAbilitySystemLibrary::SetDebuffDamageType(FGameplayEffectContextHandle
 {
 	if (FAuraGameplayEffectContext* AuraEffectContext = static_cast<FAuraGameplayEffectContext*>(EffectContextHandle.Get()))
 	{
-		const TSharedPtr<FGameplayTag> DamageType = MakeShared<FGameplayTag>(InDebuffDamageType);
-		AuraEffectContext->SetDamageType(DamageType);
+		// const TSharedPtr<FGameplayTag> DamageType = MakeShared<FGameplayTag>(InDebuffDamageType);
+		AuraEffectContext->SetDamageType(InDebuffDamageType);
 	}
 }
 

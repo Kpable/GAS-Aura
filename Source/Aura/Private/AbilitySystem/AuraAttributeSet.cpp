@@ -10,6 +10,7 @@
 #include "Net/UnrealNetwork.h"
 #include "AuraGameplayTags.h"
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
+#include "Aura/AuraLogChannels.h"
 #include "Interaction/CombatInterface.h"
 #include "Interaction/PlayerInterface.h"
 #include "Player/AuraPlayerController.h"
@@ -151,24 +152,30 @@ void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& EffectProp
 			TagContainer.AddTag(FAuraGameplayTags::Get().Effects_HitReact);
 			EffectProperties.TargetAbilitySystemComponent->TryActivateAbilitiesByTag(TagContainer);
 		}
-	}
 
-	const bool bBlock = UAuraAbilitySystemLibrary::IsBlockedHit(EffectProperties.EffectContextHandle);
-	const bool bCriticalHit = UAuraAbilitySystemLibrary::IsCriticalHit(EffectProperties.EffectContextHandle);
-	ShowFloatingText(EffectProperties, LocalIncomingDamage, bBlock, bCriticalHit);
-	if (UAuraAbilitySystemLibrary::IsSuccessfulDebuff(EffectProperties.EffectContextHandle))
-	{
-		Debuff(EffectProperties);
+		const bool bBlock = UAuraAbilitySystemLibrary::IsBlockedHit(EffectProperties.EffectContextHandle);
+		const bool bCriticalHit = UAuraAbilitySystemLibrary::IsCriticalHit(EffectProperties.EffectContextHandle);
+		ShowFloatingText(EffectProperties, LocalIncomingDamage, bBlock, bCriticalHit);
+		if (UAuraAbilitySystemLibrary::IsSuccessfulDebuff(EffectProperties.EffectContextHandle))
+		{
+			Debuff(EffectProperties);
+		}
 	}
 }
 
 void UAuraAttributeSet::Debuff(const FEffectProperties& Props)
 {
 	const FAuraGameplayTags& GameplayTags = FAuraGameplayTags::Get();
-	FGameplayEffectContextHandle EffectContextHandle = Props.EffectContextHandle;
+	FGameplayEffectContextHandle EffectContextHandle = Props.SourceAbilitySystemComponent->MakeEffectContext();
 	EffectContextHandle.AddSourceObject(Props.SourceAvatarActor);
 	
 	const FGameplayTag DamageType = UAuraAbilitySystemLibrary::GetDebuffDamageType(Props.EffectContextHandle);
+	if (!DamageType.IsValid() || !GameplayTags.DamageTypesToDebuffs.Contains(DamageType))
+	{
+		UE_LOG(LogAura, Error, TEXT("Debuff Type is not valid."));
+		return;
+	}
+	
 	const float DebuffDamage = UAuraAbilitySystemLibrary::GetDebuffDamage(Props.EffectContextHandle);
 	const float DebuffDuration = UAuraAbilitySystemLibrary::GetDebuffDuration(Props.EffectContextHandle);
 	const float DebuffFrequency = UAuraAbilitySystemLibrary::GetDebuffFrequency(Props.EffectContextHandle);
@@ -201,8 +208,8 @@ void UAuraAttributeSet::Debuff(const FEffectProperties& Props)
 	if (MutableSpec)
 	{
 		FAuraGameplayEffectContext* AuraEffectContext = static_cast<FAuraGameplayEffectContext*>(MutableSpec->GetContext().Get());
-		TSharedPtr<FGameplayTag> DebuffDamageType = MakeShareable<FGameplayTag>(new FGameplayTag(DamageType));
-		AuraEffectContext->SetDamageType(DebuffDamageType);
+		// TSharedPtr<FGameplayTag> DebuffDamageType = MakeShareable<FGameplayTag>(new FGameplayTag(DamageType));
+		AuraEffectContext->SetDamageType(DamageType);
 
 		Props.TargetAbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*MutableSpec);
 	}	

@@ -337,9 +337,11 @@ FGameplayEffectContextHandle UAuraAbilitySystemLibrary::ApplyDamageEffect(FDamag
 {
 	const FAuraGameplayTags GameplayTags = FAuraGameplayTags::Get();
 	const AActor* SourceAvatarActor = DamageEffectParams.SourceAbilitySystemComponent->GetAvatarActor();
+
 	FGameplayEffectContextHandle EffectContextHandle = DamageEffectParams.SourceAbilitySystemComponent->MakeEffectContext();
 	EffectContextHandle.AddSourceObject(SourceAvatarActor);
 	SetDeathImpulse(EffectContextHandle, DamageEffectParams.DeathImpulse);
+	
 	const FGameplayEffectSpecHandle SpecHandle = DamageEffectParams.SourceAbilitySystemComponent->
 		MakeOutgoingSpec(
 			DamageEffectParams.DamageGameplayEffectClass,

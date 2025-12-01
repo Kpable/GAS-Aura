@@ -46,7 +46,7 @@ protected:
 	float DebuffFrequency = 1.f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Damage")
-	float DeathImpulseMagnitude = 60.f;
+	float DeathImpulseMagnitude = 15000.f;
 	
 	UFUNCTION(BlueprintPure)
 	FTaggedMontage GetRandomTaggedMontageFromArray(const TArray<FTaggedMontage>& TaggedMontages) const;

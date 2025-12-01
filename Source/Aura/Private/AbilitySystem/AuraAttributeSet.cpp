@@ -129,7 +129,7 @@ void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& EffectProp
 {
 	const float LocalIncomingDamage = GetIncomingDamage();
 	SetIncomingDamage(0.f);
-	if (LocalIncomingDamage > 0.f)
+	if (FMath::Abs(LocalIncomingDamage - 0.f) > 0.01f)
 	{
 		const float NewHealth = GetHealth() - LocalIncomingDamage;
 		SetHealth(FMath::Clamp(NewHealth, 0.f, GetMaxHealth()));
@@ -141,7 +141,7 @@ void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& EffectProp
 			ICombatInterface* CombatInterface = Cast<ICombatInterface>(EffectProperties.TargetAvatarActor);
 			if (CombatInterface)
 			{
-				CombatInterface->Die();
+				CombatInterface->Die(UAuraAbilitySystemLibrary::GetDeathImpulse(EffectProperties.EffectContextHandle));
 			}
 
 			SendXPEvent(EffectProperties);

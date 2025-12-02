@@ -78,6 +78,15 @@ void AAuraProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, 
 		{
 			const FVector DeathImpulse = GetActorForwardVector() * DamageEffectParams.DeathImpulseMagnitude;
 			DamageEffectParams.DeathImpulse = DeathImpulse;
+
+			const bool bKnockback = FMath::RandRange(1, 100) < DamageEffectParams.KnockbackChance;
+			if (bKnockback)
+			{
+				const FVector KnockbackDirection = GetActorForwardVector().RotateAngleAxis(45.f, GetActorRightVector());
+				const FVector KnockbackForce = KnockbackDirection * DamageEffectParams.KnockbackForceMagnitude;
+				DamageEffectParams.KnockbackForce = KnockbackForce;
+			}
+			
 			DamageEffectParams.TargetAbilitySystemComponent = TargetASC;
 			
 			UAuraAbilitySystemLibrary::ApplyDamageEffect(DamageEffectParams);

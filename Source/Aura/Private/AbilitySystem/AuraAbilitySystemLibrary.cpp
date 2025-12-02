@@ -377,3 +377,47 @@ FGameplayEffectContextHandle UAuraAbilitySystemLibrary::ApplyDamageEffect(FDamag
 
 	return EffectContextHandle;
 }
+
+TArray<FRotator> UAuraAbilitySystemLibrary::GetSpreadRotators(const FVector& Forward, const FVector& Axis, float Spread, int32 NumRotators)
+{
+	TArray<FRotator> SpreadRotators;
+
+	const FVector LeftOfSpread = Forward.RotateAngleAxis(-Spread / 2.f, Axis);
+	if (NumRotators > 1)
+	{
+		const float DeltaSpread = Spread / (NumRotators - 1);
+		for (int32 i = 0; i < NumRotators; i++)
+		{
+			const FVector Direction = LeftOfSpread.RotateAngleAxis(DeltaSpread * i, Axis);
+			SpreadRotators.Add(Direction.Rotation());
+		}
+	}
+	else
+	{
+		SpreadRotators.Add(Forward.Rotation());
+	}
+
+	return SpreadRotators;
+}
+
+TArray<FVector> UAuraAbilitySystemLibrary::GetSpreadDirections(const FVector& Forward, const FVector& Axis, float Spread, int32 NumDirections)
+{
+	TArray<FVector> SpreadDirections;
+
+	const FVector LeftOfSpread = Forward.RotateAngleAxis(-Spread / 2.f, Axis);
+	if (NumDirections > 1)
+	{
+		const float DeltaSpread = Spread / (NumDirections - 1);
+		for (int32 i = 0; i < NumDirections; i++)
+		{
+			const FVector Direction = LeftOfSpread.RotateAngleAxis(DeltaSpread * i, Axis);
+			SpreadDirections.Add(Direction);
+		}
+	}
+	else
+	{
+		SpreadDirections.Add(Forward);
+	}
+	
+	return SpreadDirections;
+}
